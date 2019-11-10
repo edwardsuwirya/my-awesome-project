@@ -51,3 +51,7 @@
 .login.hideAlert{
     display: none;
 }
+
+.login.hideInput{
+    display: none;
+}
