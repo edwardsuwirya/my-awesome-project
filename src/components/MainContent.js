@@ -34,7 +34,7 @@ class MainContent extends React.Component {
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                        <a className="navbar-brand mx-auto" href="#">My Awesome Project</a>
+                    <a className="navbar-brand mx-auto" href="#">My Awesome Project</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
                             aria-label="Toggle navigation">
@@ -53,6 +53,7 @@ class MainContent extends React.Component {
                     </div>
                     <div class="navbar-collapse collapse w-100">
                         <div className="navbar-nav ml-auto">
+                            <label className="nav-item nav-link">{'Welcome ' + this.props.userInfo.email}</label>
                             <a className="nav-item nav-link" onClick={this.doLogout}>Logout</a>
                         </div>
                     </div>

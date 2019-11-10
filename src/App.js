@@ -1,16 +1,17 @@
 import React from 'react';
 import Login from "./components/Login";
 import MainContent from "./components/MainContent";
+import './app.css';
 
 class App extends React.Component {
     constructor() {
         super();
-        this.state = {sudahLogin: false}
+        this.state = {sudahLogin: false, userInfo: {}}
         // this.doChangeUserSession = this.doChangeUserSession.bind(this);
     }
 
-    doChangeUserSession = (aksi) => {
-        this.setState({sudahLogin: aksi});
+    doChangeUserSession = (aksi, userInfo) => {
+        this.setState({sudahLogin: aksi, userInfo});
     };
     // doChangeUserSession(aksi) {
     //     console.log(this);
@@ -18,15 +19,14 @@ class App extends React.Component {
     // }
 
     render() {
-        if (this.state.sudahLogin) {
+        const {sudahLogin, userInfo} = this.state;
+        if (sudahLogin) {
             return (
-                <MainContent rubahSesiKeluar={this.doChangeUserSession}/>
+                <MainContent rubahSesiKeluar={this.doChangeUserSession} userInfo={userInfo}/>
             )
         } else {
             return (
-                <div style={{height: '100vh', width: '100vw'}}>
-                    <Login rubahSesiMasuk={this.doChangeUserSession}/>
-                </div>
+                <Login rubahSesiMasuk={this.doChangeUserSession}/>
             )
         }
     }

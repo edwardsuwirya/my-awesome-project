@@ -1,6 +1,8 @@
 .login.main {
     background-image: url("https://picsum.photos/id/460/4476/2984");
     background-size: cover;
+    height: 100vh;
+    width: 100vw;
 }
 
 .login.container {
@@ -38,10 +40,14 @@
 .login.inputText:focus {
     border-color: whitesmoke !important;
     border-bottom: 1px solid whitesmoke !important;
-    box-shadow:0 7px 4px -6px white;
+    box-shadow: 0 7px 4px -6px white;
 }
 
 .login.inputButton {
     background: none !important;
     border: 1px solid whitesmoke;
+}
+
+.login.hideAlert{
+    display: none;
 }
