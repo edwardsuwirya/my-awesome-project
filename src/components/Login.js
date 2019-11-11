@@ -26,6 +26,9 @@ class Login extends React.Component {
             if (this.state.email === 'edward.suwirya@enigmacamp.com' && this.state.password === '123') {
                 const userInfo = {email: this.state.email};
                 this.props.rubahSesiMasuk(true, userInfo);
+                this.props.history.push({
+                    pathname: '/protected/main'
+                })
             } else {
                 this.setState({alert: '', notificationMessage: 'Invalid Password'})
             }
@@ -46,14 +49,20 @@ class Login extends React.Component {
                 this.setState({invalidEmail: 'is-invalid'});
             } else {
                 if (this.state.email === 'edward.suwirya@enigmacamp.com') {
-                    this.setState({invalidEmail: '', invalidPassword: '',alert:'login hideAlert',hideEmail: 'login hideInput', hidePassword: ''})
+                    this.setState({
+                        invalidEmail: '',
+                        invalidPassword: '',
+                        alert: 'login hideAlert',
+                        hideEmail: 'login hideInput',
+                        hidePassword: ''
+                    })
                 } else {
                     this.setState({alert: '', notificationMessage: 'We do not know you'});
                 }
             }
 
         }
-    }
+    };
 
     render() {
         const loginLabel = {emailAddressText: 'Email Address', passwordText: 'Password', buttonText: 'Login'};

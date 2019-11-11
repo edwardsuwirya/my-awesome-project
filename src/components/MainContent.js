@@ -6,7 +6,6 @@ import './mainContent.css';
 class MainContent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {activeComponent: null}
     };
 
     doLogout = (event) => {
@@ -14,16 +13,18 @@ class MainContent extends React.Component {
         this.props.rubahSesiKeluar(false);
     };
 
-    doCloseMe = () => {
-        this.setState({activeComponent: null});
-    };
-    doShowModule = (module) => {
+    doShowModule = (event,module) => {
+        event.preventDefault();
         switch (module) {
             case 'category':
-                this.setState({activeComponent: <MasterCategory eventTutup={this.doCloseMe}/>});
+                this.props.history.push({
+                    pathname: '/protected/main/masterCategory'
+                });
                 break;
             case 'product':
-                this.setState({activeComponent: <MasterProduct eventTutup={this.doCloseMe}/>});
+                this.props.history.push({
+                    pathname: '/protected/main/masterProduct'
+                });
                 break;
             default:
                 break;
@@ -42,16 +43,16 @@ class MainContent extends React.Component {
                     </button>
                     <div className="collapse navbar-collapse w-100" id="navbarNavAltMarkup">
                         <div className="navbar-nav mr-auto">
-                            <a className="nav-item nav-link" onClick={() => {
-                                this.doShowModule('category')
+                            <a className="nav-item nav-link" onClick={(event) => {
+                                this.doShowModule(event,'category')
                             }}>Category</a>
-                            <a className="nav-item nav-link" onClick={() => {
-                                this.doShowModule('product')
+                            <a className="nav-item nav-link" onClick={(event) => {
+                                this.doShowModule(event,'product')
                             }}>Product</a>
 
                         </div>
                     </div>
-                    <div class="navbar-collapse collapse w-100">
+                    <div className="navbar-collapse collapse w-100">
                         <div className="navbar-nav ml-auto">
                             <label className="nav-item nav-link">{'Welcome ' + this.props.userInfo.email}</label>
                             <a className="nav-item nav-link" onClick={this.doLogout}>Logout</a>
@@ -60,7 +61,7 @@ class MainContent extends React.Component {
 
                 </nav>
                 <div className='container mt-3'>
-                    {this.state.activeComponent}
+                    {this.props.children}
                 </div>
 
             </div>
