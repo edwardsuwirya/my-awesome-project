@@ -1,5 +1,7 @@
 export const UTILS = {
     auth: {
-        isAuthenticated: false
+        isAuthenticated: false,
+        userInfo:{},
+        sessionStateChange:function(){}
     }
 };

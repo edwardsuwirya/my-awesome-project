@@ -14,10 +14,12 @@ class App extends React.Component {
         super();
         this.state = {userInfo: {}}
         // this.doChangeUserSession = this.doChangeUserSession.bind(this);
+        UTILS.auth.sessionStateChange = this.doChangeUserSession;
     }
 
     doChangeUserSession = (aksi, userInfo) => {
         UTILS.auth.isAuthenticated = aksi;
+        UTILS.auth.userInfo = userInfo;
         this.setState({userInfo});
     };
 
@@ -26,15 +28,9 @@ class App extends React.Component {
         return (
             <BrowserRouter>
                 <Switch>
-                    <PrivateRoute path='/protected/main/masterCategory' Component={MasterCategory}
-                                  rubahSesiKeluar={this.doChangeUserSession}
-                                  userInfo={userInfo}/>
-                    <PrivateRoute path='/protected/main/masterProduct' Component={MasterProduct}
-                                  rubahSesiKeluar={this.doChangeUserSession}
-                                  userInfo={userInfo}/>
-                    <PrivateRoute path='/protected/main' Component={MainContent}
-                                  rubahSesiKeluar={this.doChangeUserSession}
-                                  userInfo={userInfo}/>
+                    <PrivateRoute path='/protected/main/masterCategory' Component={MasterCategory}/>
+                    <PrivateRoute path='/protected/main/masterProduct' Component={MasterProduct}/>
+                    <PrivateRoute path='/protected/main' Component={MainContent}/>
                     <Route path="/"
                            render={(props) => <Login {...props} rubahSesiMasuk={this.doChangeUserSession}/>}
                     />

@@ -5,7 +5,8 @@ import {UTILS} from "../utils/authUtils";
 const PrivateRoute = ({Component, path, ...rest}) => {
     return (
         <Route path={path} render={(props) => {
-            return UTILS.auth.isAuthenticated ? <Component {...props} {...rest}/> : <Redirect to='/'/>
+            return UTILS.auth.isAuthenticated ? <Component {...props} {...rest} userInfo={UTILS.auth.userInfo} rubahSesiKeluar={UTILS.auth.sessionStateChange}/> :
+                <Redirect to='/'/>
         }}/>
     )
 };

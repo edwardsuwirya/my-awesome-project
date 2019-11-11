@@ -14,6 +14,7 @@ class Login extends React.Component {
             hidePassword: 'hideInput',
             notificationMessage: ''
         };
+        this.passwordRef = React.createRef();
     };
 
     doLogin = (event) => {
@@ -43,19 +44,20 @@ class Login extends React.Component {
         this.setState({password: event.target.value});
     };
 
-    onHandleKeyPress = (event) => {
+    onHandleKeyPress = async (event) => {
         if (event.key === 'Enter') {
             if (!this.state.email) {
                 this.setState({invalidEmail: 'is-invalid'});
             } else {
-                if (this.state.email === 'edward.suwirya@enigmacamp.com') {
-                    this.setState({
+                if (this.state.email === 'edo') {
+                    await this.setState({
                         invalidEmail: '',
                         invalidPassword: '',
                         alert: 'login hideAlert',
                         hideEmail: 'login hideInput',
                         hidePassword: ''
-                    })
+                    });
+                    this.passwordRef.current.focus();
                 } else {
                     this.setState({alert: '', notificationMessage: 'We do not know you'});
                 }
@@ -103,7 +105,7 @@ class Login extends React.Component {
                                         <div className={`form-group login ${hidePassword}`}>
                                             <label className=" login labelInput"
                                                    htmlFor=" exampleInputPassword1">{loginLabel.passwordText}</label>
-                                            <input type="password"
+                                            <input ref={this.passwordRef} type="password"
                                                    className={`form-control ${invalidPassword} login inputText`}
                                                    id=" exampleInputPassword1"
                                                    onChange={this.onPasswordInputChange}
