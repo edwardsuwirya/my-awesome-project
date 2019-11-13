@@ -24,7 +24,7 @@ class Login extends React.Component {
             this.setState({invalidPassword: 'is-invalid'});
         }
         if (this.state.email && this.state.password) {
-            if (this.state.email === 'edward.suwirya@enigmacamp.com' && this.state.password === '123') {
+            if (this.state.email === 'edo' && this.state.password === '123') {
                 const userInfo = {email: this.state.email};
                 this.props.rubahSesiMasuk(true, userInfo);
                 this.props.history.push({
@@ -68,7 +68,7 @@ class Login extends React.Component {
 
     render() {
         const loginLabel = {emailAddressText: 'Email Address', passwordText: 'Password', buttonText: 'Login'};
-        const {email, password, invalidEmail, invalidPassword, alert, hideEmail, hidePassword, notificationMessage} = this.state;
+            const {email, password, invalidEmail, invalidPassword, alert, hideEmail, hidePassword, notificationMessage} = this.state;
         return (
             <div className='login main'>
                 <div className="d-flex flex-column login container">

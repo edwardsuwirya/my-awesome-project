@@ -8,7 +8,9 @@ class MasterCategory extends React.Component {
 
     doTutup = (e) => {
         e.preventDefault();
-        this.props.eventTutup();
+        this.props.history.push({
+            pathname: '/protected/main'
+        })
     };
 
     render() {
