@@ -1,5 +1,6 @@
 import React from 'react';
 import './login.css';
+import {validateUserName,validatePassword} from "../api/user";
 
 class Login extends React.Component {
     constructor(props) {
@@ -12,20 +13,27 @@ class Login extends React.Component {
             alert: 'login hideAlert',
             hideEmail: '',
             hidePassword: 'hideInput',
-            notificationMessage: ''
+            notificationMessage: '',
+            userId:'',
+            userInfo:{}
         };
         this.passwordRef = React.createRef();
     };
 
-    doLogin = (event) => {
+    doLogin = async (event) => {
         event.preventDefault();
 
         if (!this.state.password) {
             this.setState({invalidPassword: 'is-invalid'});
         }
-        if (this.state.email && this.state.password) {
-            if (this.state.email === 'edo' && this.state.password === '123') {
-                const userInfo = {email: this.state.email};
+        if (this.state.userId && this.state.password) {
+
+            const response = await validatePassword(this.state.userId,this.state.password);
+            const data = await response.json();
+            await this.setState({userInfo: data});
+
+            if (this.state.userInfo.userId) {
+                const userInfo = {email: this.state.userInfo.namaLengkap};
                 this.props.rubahSesiMasuk(true, userInfo);
                 this.props.history.push({
                     pathname: '/protected/main'
@@ -49,13 +57,16 @@ class Login extends React.Component {
             if (!this.state.email) {
                 this.setState({invalidEmail: 'is-invalid'});
             } else {
-                if (this.state.email === 'edo') {
+                const response = await validateUserName(this.state.email);
+                const data = await response.json();
+                if (data.status==='ok') {
                     await this.setState({
                         invalidEmail: '',
                         invalidPassword: '',
                         alert: 'login hideAlert',
                         hideEmail: 'login hideInput',
-                        hidePassword: ''
+                        hidePassword: '',
+                        userId:data.id
                     });
                     this.passwordRef.current.focus();
                 } else {
