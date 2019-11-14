@@ -1,16 +1,23 @@
 import React from 'react';
 import {Redirect, Route} from "react-router-dom";
-import {UTILS} from "../utils/authUtils";
+import {connect} from "react-redux";
 
-const PrivateRoute = ({Component, path, ...rest}) => {
-    return (
-        <Route path={path} render={(props) => {
-            return UTILS.auth.isAuthenticated ? <Component {...props}
-                                                           userInfo={UTILS.auth.userInfo}
-                                                           rubahSesiKeluar={UTILS.auth.sessionStateChange}/> :
-                <Redirect to='/'/>
-        }}/>
-    )
+class PrivateRoute extends React.Component{
+
+
+    render(){
+        return (
+            <Route path={this.props.path} render={(props) => {
+                return this.props.changeSession ? <this.props.Component {...props}/> :
+                    <Redirect to='/'/>
+            }}/>
+        )
+    }
 };
 
-export default PrivateRoute;
+const mapStateToProps = (state) => {
+    console.log(state);
+    return {changeSession: state.changeSession};
+};
+
+export default connect(mapStateToProps)(PrivateRoute);

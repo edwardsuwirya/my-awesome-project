@@ -1,7 +1,7 @@
 import React from 'react';
-import MasterCategory from "./MasterCategory";
-import MasterProduct from "./MasterProduct";
 import './mainContent.css';
+import {connect} from "react-redux";
+import {changeUserSession} from "../actions";
 
 class MainContent extends React.Component {
     constructor(props) {
@@ -10,10 +10,10 @@ class MainContent extends React.Component {
 
     doLogout = (event) => {
         event.preventDefault();
-        this.props.rubahSesiKeluar(false);
+        this.props.changeUserSession(false);
     };
 
-    doShowModule = (event,module) => {
+    doShowModule = (event, module) => {
         event.preventDefault();
         switch (module) {
             case 'category':
@@ -44,17 +44,18 @@ class MainContent extends React.Component {
                     <div className="collapse navbar-collapse w-100" id="navbarNavAltMarkup">
                         <div className="navbar-nav mr-auto">
                             <a className="nav-item nav-link" onClick={(event) => {
-                                this.doShowModule(event,'category')
+                                this.doShowModule(event, 'category')
                             }}>Category</a>
                             <a className="nav-item nav-link" onClick={(event) => {
-                                this.doShowModule(event,'product')
+                                this.doShowModule(event, 'product')
                             }}>Product</a>
 
                         </div>
                     </div>
                     <div className="navbar-collapse collapse w-100">
                         <div className="navbar-nav ml-auto">
-                            <label className="nav-item nav-link">{'Welcome ' + this.props.userInfo.email}</label>
+                            <label
+                                className="nav-item nav-link">{'Welcome ' + this.props.userActive.namaLengkap}</label>
                             <a className="nav-item nav-link" onClick={this.doLogout}>Logout</a>
                         </div>
                     </div>
@@ -69,4 +70,13 @@ class MainContent extends React.Component {
     }
 }
 
-export default MainContent;
+const mapStateToProps = (state) => {
+    // console.log(state);
+    return {userActive: state.userActive};
+};
+
+const mapDispatchToProps = {
+    changeUserSession: changeUserSession
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainContent);

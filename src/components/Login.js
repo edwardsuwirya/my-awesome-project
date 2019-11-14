@@ -1,6 +1,8 @@
 import React from 'react';
 import './login.css';
-import {validateUserName,validatePassword} from "../api/user";
+import {validatePassword, validateUserName} from "../api/user";
+import {authUser, changeUserSession} from "../actions";
+import {connect} from "react-redux";
 
 class Login extends React.Component {
     constructor(props) {
@@ -14,8 +16,7 @@ class Login extends React.Component {
             hideEmail: '',
             hidePassword: 'hideInput',
             notificationMessage: '',
-            userId:'',
-            userInfo:{}
+            userId: ''
         };
         this.passwordRef = React.createRef();
     };
@@ -28,13 +29,12 @@ class Login extends React.Component {
         }
         if (this.state.userId && this.state.password) {
 
-            const response = await validatePassword(this.state.userId,this.state.password);
+            const response = await validatePassword(this.state.userId, this.state.password);
             const data = await response.json();
-            await this.setState({userInfo: data});
 
-            if (this.state.userInfo.userId) {
-                const userInfo = {email: this.state.userInfo.namaLengkap};
-                this.props.rubahSesiMasuk(true, userInfo);
+            if (data.userId) {
+                this.props.changeUserSession(true);
+                this.props.authUser(data);
                 this.props.history.push({
                     pathname: '/protected/main'
                 })
@@ -59,14 +59,14 @@ class Login extends React.Component {
             } else {
                 const response = await validateUserName(this.state.email);
                 const data = await response.json();
-                if (data.status==='ok') {
+                if (data.status === 'ok') {
                     await this.setState({
                         invalidEmail: '',
                         invalidPassword: '',
                         alert: 'login hideAlert',
                         hideEmail: 'login hideInput',
                         hidePassword: '',
-                        userId:data.id
+                        userId: data.id
                     });
                     this.passwordRef.current.focus();
                 } else {
@@ -79,7 +79,7 @@ class Login extends React.Component {
 
     render() {
         const loginLabel = {emailAddressText: 'Email Address', passwordText: 'Password', buttonText: 'Login'};
-            const {email, password, invalidEmail, invalidPassword, alert, hideEmail, hidePassword, notificationMessage} = this.state;
+        const {email, password, invalidEmail, invalidPassword, alert, hideEmail, hidePassword, notificationMessage} = this.state;
         return (
             <div className='login main'>
                 <div className="d-flex flex-column login container">
@@ -140,4 +140,9 @@ class Login extends React.Component {
     }
 };
 
-export default Login;
+const mapDispatchToProps = {
+    authUser: authUser,
+    changeUserSession:changeUserSession
+};
+
+export default connect(null, mapDispatchToProps)(Login);
