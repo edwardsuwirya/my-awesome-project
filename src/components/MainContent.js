@@ -1,7 +1,7 @@
 import React from 'react';
 import './mainContent.css';
 import {connect} from "react-redux";
-import {changeUserSession} from "../actions";
+import {changeUserSession, logout} from "../actions";
 
 class MainContent extends React.Component {
     constructor(props) {
@@ -10,7 +10,7 @@ class MainContent extends React.Component {
 
     doLogout = (event) => {
         event.preventDefault();
-        this.props.changeUserSession(false);
+        this.props.logout();
     };
 
     doShowModule = (event, module) => {
@@ -76,7 +76,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    changeUserSession: changeUserSession
+    logout: logout
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainContent);

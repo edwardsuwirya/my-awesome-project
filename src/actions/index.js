@@ -11,3 +11,9 @@ export const changeUserSession = (isAuthenticated) => {
         payload: isAuthenticated
     }
 };
+
+export const logout = () => {
+    return {
+        type: 'LOGOUT'
+    }
+};

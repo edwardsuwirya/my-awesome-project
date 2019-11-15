@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {Provider} from "react-redux";
-import {createStore} from "redux";
-import reducers from './reducers';
+import {changeSessionReducer, userActiveReducer} from "./reducers/user";
+import Root from "./Root";
 
-const store = createStore(reducers);
-ReactDOM.render(<Provider store={store}>
+
+ReactDOM.render(<Root>
     <App/>
-</Provider>, document.querySelector('#root'));
+</Root>, document.querySelector('#root'));
