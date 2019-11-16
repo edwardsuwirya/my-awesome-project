@@ -1,5 +1,6 @@
 import React from 'react';
 import MainContent from "./MainContent";
+import {connect} from "react-redux";
 
 class MasterCategory extends React.Component {
     constructor(props) {
@@ -33,4 +34,7 @@ class MasterCategory extends React.Component {
     }
 }
 
-export default MasterCategory;
+const mapStateToProps = (state) => {
+    return {listProduct: state.listProduct};
+};
+export default connect(mapStateToProps)(MasterCategory);

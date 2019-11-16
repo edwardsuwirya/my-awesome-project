@@ -2,6 +2,7 @@ import React from 'react';
 import './mainContent.css';
 import {connect} from "react-redux";
 import {changeUserSession, logout} from "../actions";
+import {Link} from "react-router-dom";
 
 class MainContent extends React.Component {
     constructor(props) {
@@ -11,6 +12,7 @@ class MainContent extends React.Component {
     doLogout = (event) => {
         event.preventDefault();
         this.props.logout();
+        // console.log(this.props)
     };
 
     doShowModule = (event, module) => {
@@ -49,7 +51,6 @@ class MainContent extends React.Component {
                             <a className="nav-item nav-link" onClick={(event) => {
                                 this.doShowModule(event, 'product')
                             }}>Product</a>
-
                         </div>
                     </div>
                     <div className="navbar-collapse collapse w-100">
@@ -71,7 +72,7 @@ class MainContent extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    // console.log(state);
+    console.log(state)
     return {userActive: state.userActive};
 };
 

@@ -14,7 +14,6 @@ class PrivateRoute extends React.Component{
 };
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {changeSession: state.changeSession};
 };
 

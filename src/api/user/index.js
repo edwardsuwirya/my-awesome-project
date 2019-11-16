@@ -1,5 +1,5 @@
 export function validateUserName(userName) {
-    return fetch(process.env.REACT_APP_WS_URL + '/auth/userName', {
+    return fetch(process.env.REACT_APP_WS_URL + '/users/auth/userName', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body:  JSON.stringify({
@@ -9,7 +9,7 @@ export function validateUserName(userName) {
 }
 
 export function validatePassword(id,password) {
-    return fetch(process.env.REACT_APP_WS_URL + '/auth/password', {
+    return fetch(process.env.REACT_APP_WS_URL + '/users/auth/password', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body:  JSON.stringify({

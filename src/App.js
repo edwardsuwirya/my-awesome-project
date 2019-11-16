@@ -6,6 +6,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import MasterProduct from "./components/MasterProduct";
 import MasterCategory from "./components/MasterCategory";
+import MasterProductUpdate from "./components/MasterProductUpdate";
 
 
 class App extends React.Component {
@@ -17,6 +18,7 @@ class App extends React.Component {
         return (
             <BrowserRouter>
                 <Switch>
+                    <PrivateRoute path='/protected/main/masterProductUpdate' Component={MasterProductUpdate}/>
                     <PrivateRoute path='/protected/main/masterCategory' Component={MasterCategory}/>
                     <PrivateRoute path='/protected/main/masterProduct' Component={MasterProduct}/>
                     <PrivateRoute path='/protected/main' Component={MainContent}/>

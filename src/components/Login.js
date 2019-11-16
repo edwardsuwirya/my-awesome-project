@@ -22,6 +22,7 @@ class Login extends React.Component {
     };
 
     doLogin = async (event) => {
+        console.log(this.props)
         event.preventDefault();
 
         if (!this.state.password) {

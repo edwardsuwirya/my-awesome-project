@@ -2,14 +2,15 @@ import React from 'react';
 import {Provider} from "react-redux";
 import {combineReducers, createStore} from "redux";
 import {changeSessionReducer, userActiveReducer} from "./reducers/user";
-import {getListProduct} from "./reducers/product";
+import {getListProduct, updateProduct} from "./reducers/product";
 
 class Root extends React.Component {
     render() {
         const appReducer = combineReducers({
             userActive: userActiveReducer,
             changeSession: changeSessionReducer,
-            listProduct: getListProduct
+            listProduct: getListProduct,
+            updateProduct: updateProduct
         });
 
         const rootReducer = (state, action) => {
