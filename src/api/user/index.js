@@ -5,7 +5,7 @@ export function validateUserName(userName) {
         body:  JSON.stringify({
             'userName': userName
         })
-    });
+    })
 }
 
 export function validatePassword(id,password) {

@@ -1,14 +1,9 @@
 import React from 'react';
 import './mainContent.css';
 import {connect} from "react-redux";
-import {changeUserSession, logout} from "../actions";
-import {Link} from "react-router-dom";
+import {logout} from "../../actions/user/index";
 
 class MainContent extends React.Component {
-    constructor(props) {
-        super(props);
-    };
-
     doLogout = (event) => {
         event.preventDefault();
         this.props.logout();
@@ -37,7 +32,7 @@ class MainContent extends React.Component {
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a className="navbar-brand mx-auto" href="#">My Awesome Project</a>
+                    <div className="navbar-brand mx-auto">My Awesome Project</div>
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
                             aria-label="Toggle navigation">
@@ -45,19 +40,19 @@ class MainContent extends React.Component {
                     </button>
                     <div className="collapse navbar-collapse w-100" id="navbarNavAltMarkup">
                         <div className="navbar-nav mr-auto">
-                            <a className="nav-item nav-link" onClick={(event) => {
+                            <div className="nav-item nav-link" onClick={(event) => {
                                 this.doShowModule(event, 'category')
-                            }}>Category</a>
-                            <a className="nav-item nav-link" onClick={(event) => {
+                            }}>Category</div>
+                            <div className="nav-item nav-link" onClick={(event) => {
                                 this.doShowModule(event, 'product')
-                            }}>Product</a>
+                            }}>Product</div>
                         </div>
                     </div>
                     <div className="navbar-collapse collapse w-100">
                         <div className="navbar-nav ml-auto">
                             <label
                                 className="nav-item nav-link">{'Welcome ' + this.props.userActive.namaLengkap}</label>
-                            <a className="nav-item nav-link" onClick={this.doLogout}>Logout</a>
+                            <div className="nav-item nav-link" onClick={this.doLogout}>Logout</div>
                         </div>
                     </div>
 
@@ -72,7 +67,6 @@ class MainContent extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {userActive: state.userActive};
 };
 

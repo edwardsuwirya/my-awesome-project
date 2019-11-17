@@ -1,7 +1,7 @@
 import React from 'react';
 import './login.css';
-import {validatePassword, validateUserName} from "../api/user";
-import {authUser, changeUserSession} from "../actions";
+import {validatePassword, validateUserName} from "../../api/user";
+import {authUser, changeUserSession} from "../../actions/user/index";
 import {connect} from "react-redux";
 
 class Login extends React.Component {
@@ -18,28 +18,35 @@ class Login extends React.Component {
             notificationMessage: '',
             userId: ''
         };
+        this.emailRef = React.createRef();
         this.passwordRef = React.createRef();
     };
 
+    componentDidMount() {
+        this.emailRef.current.focus();
+    }
+
     doLogin = async (event) => {
-        console.log(this.props)
         event.preventDefault();
 
         if (!this.state.password) {
             this.setState({invalidPassword: 'is-invalid'});
         }
         if (this.state.userId && this.state.password) {
+            try {
+                const response = await validatePassword(this.state.userId, this.state.password);
+                const data = await response.json();
 
-            const response = await validatePassword(this.state.userId, this.state.password);
-            const data = await response.json();
-
-            if (data.userId) {
-                this.props.changeUserSession(true);
-                this.props.authUser(data);
-                this.props.history.push({
-                    pathname: '/protected/main'
-                })
-            } else {
+                if (data.userId) {
+                    this.props.changeUserSession(true);
+                    this.props.authUser(data);
+                    this.props.history.push({
+                        pathname: '/protected/main'
+                    })
+                } else {
+                    this.setState({alert: '', notificationMessage: 'Invalid Password'})
+                }
+            } catch (err) {
                 this.setState({alert: '', notificationMessage: 'Invalid Password'})
             }
         }
@@ -53,28 +60,37 @@ class Login extends React.Component {
         this.setState({password: event.target.value});
     };
 
-    onHandleKeyPress = async (event) => {
-        if (event.key === 'Enter') {
+    onHandleKeyPress = async (event, from) => {
+        if (event.key === 'Enter' && from === 'email') {
             if (!this.state.email) {
                 this.setState({invalidEmail: 'is-invalid'});
             } else {
-                const response = await validateUserName(this.state.email);
-                const data = await response.json();
-                if (data.status === 'ok') {
-                    await this.setState({
-                        invalidEmail: '',
-                        invalidPassword: '',
-                        alert: 'login hideAlert',
-                        hideEmail: 'login hideInput',
-                        hidePassword: '',
-                        userId: data.id
-                    });
-                    this.passwordRef.current.focus();
-                } else {
+                try {
+                    const response = await validateUserName(this.state.email);
+                    const data = await response.json();
+                    if (data.status === 'ok') {
+                        await this.setState({
+                            invalidEmail: '',
+                            invalidPassword: '',
+                            alert: 'login hideAlert',
+                            hideEmail: 'login hideInput',
+                            hidePassword: '',
+                            userId: data.id
+                        });
+                        this.passwordRef.current.focus();
+                    } else {
+                        this.setState({alert: '', notificationMessage: 'We do not know you'});
+                    }
+                } catch (err) {
                     this.setState({alert: '', notificationMessage: 'We do not know you'});
                 }
+
             }
 
+        } else if (event.key === 'Enter' && from === 'password') {
+            this.doLogin(event);
+        } else {
+            //do nothing
         }
     };
 
@@ -97,12 +113,12 @@ class Login extends React.Component {
                                         <div className={`form-group ${hideEmail}`}>
                                             <label className=" login labelInput"
                                                    htmlFor=" exampleInputEmail1">{loginLabel.emailAddressText}</label>
-                                            <input type=" text"
+                                            <input ref={this.emailRef} type=" text"
                                                    className={`form-control ${invalidEmail} login inputText`}
                                                    id=" exampleInputEmail1"
                                                    placeholder=" Enter email" value={email}
                                                    onChange={this.onEmailInputChange}
-                                                   onKeyPress={this.onHandleKeyPress}/>
+                                                   onKeyPress={(e) => this.onHandleKeyPress(e, 'email')}/>
                                             <div className=" invalid-feedback">
                                                 Please enter an email in the input.
                                             </div>
@@ -121,6 +137,7 @@ class Login extends React.Component {
                                                    className={`form-control ${invalidPassword} login inputText`}
                                                    id=" exampleInputPassword1"
                                                    onChange={this.onPasswordInputChange}
+                                                   onKeyPress={(e) => this.onHandleKeyPress(e, 'password')}
                                                    value={password}
                                                    placeholder=" Password"/>
                                             <div className=" invalid-feedback">
@@ -143,7 +160,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = {
     authUser: authUser,
-    changeUserSession:changeUserSession
+    changeUserSession: changeUserSession
 };
 
 export default connect(null, mapDispatchToProps)(Login);
