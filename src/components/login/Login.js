@@ -104,7 +104,7 @@ class Login extends React.Component {
                         <div className="d-flex justify-content-end login containerEnd">
                             <div className="card w-50 login backgroundColorCard">
                                 <div className="card-body">
-                                    <h2 className="login labelInput">My Awesome Project</h2>
+                                    <h2 className="login labelInput"><i class="fas fa-child"></i>  My Awesome Project</h2>
                                     <br/>
                                     <div className={`alert alert-danger ${alert}`} role="alert">
                                         {notificationMessage}
@@ -145,8 +145,8 @@ class Login extends React.Component {
                                             </div>
                                         </div>
                                         <button type=" submit"
-                                                className={`btn btn-primary login inputButton ${hidePassword}`}
-                                                onClick={this.doLogin}>{loginLabel.buttonText}</button>
+                                                className={`btn btn-primary login inputButton ${hidePassword} awesome-button-sm`}
+                                                onClick={this.doLogin}><i class="fas fa-sign-in-alt"></i> {loginLabel.buttonText}</button>
                                     </div>
                                 </div>
                             </div>

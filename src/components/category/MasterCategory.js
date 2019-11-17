@@ -72,7 +72,7 @@ class MasterCategory extends React.Component {
                     <div className="card-body">
                         <h5 className="card-title">
                             <div className='d-flex flex-row align-items-center'>
-                                <div className='flex-grow-1'>Master Category</div>
+                                <div className='flex-grow-1'><i class="fas fa-clipboard-list"></i> Master Category</div>
                                 <div>
                                     <button className="btn btn-link" onClick={this.doTutup}><i
                                         className="fas fa-2x fa-times-circle"></i></button>

@@ -57,7 +57,7 @@ class MasterProductUpdate extends React.Component {
                         <div className="card-body">
                             <div className="card-title">
                                 <div className='d-flex flex-row align-items-center'>
-                                    <div className='flex-grow-1'><h5>{`Master Product ${this.state.forAct}`}</h5></div>
+                                    <div className='flex-grow-1'><h5><i class="fas fa-dolly-flatbed"></i>  {`Master Product ${this.state.forAct}`}</h5></div>
                                     <div>
                                         <button className="btn btn-link" onClick={this.doCancel}><i
                                             className="fas fa-2x fa-times-circle"></i></button>

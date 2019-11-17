@@ -32,7 +32,7 @@ class MainContent extends React.Component {
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <div className="navbar-brand mx-auto">My Awesome Project</div>
+                    <div className="navbar-brand mx-auto"><i class="fas fa-child"></i> My Awesome Project</div>
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
                             aria-label="Toggle navigation">
@@ -42,17 +42,17 @@ class MainContent extends React.Component {
                         <div className="navbar-nav mr-auto">
                             <div className="nav-item nav-link" onClick={(event) => {
                                 this.doShowModule(event, 'category')
-                            }}>Category</div>
+                            }}><i class="fas fa-clipboard-list"></i> Category</div>
                             <div className="nav-item nav-link" onClick={(event) => {
                                 this.doShowModule(event, 'product')
-                            }}>Product</div>
+                            }}><i class="fas fa-dolly-flatbed"></i> Product</div>
                         </div>
                     </div>
                     <div className="navbar-collapse collapse w-100">
                         <div className="navbar-nav ml-auto">
                             <label
                                 className="nav-item nav-link">{'Welcome ' + this.props.userActive.namaLengkap}</label>
-                            <div className="nav-item nav-link" onClick={this.doLogout}>Logout</div>
+                            <div className="nav-item nav-link" onClick={this.doLogout}><i class="fas fa-sign-out-alt"></i> Logout</div>
                         </div>
                     </div>
 
