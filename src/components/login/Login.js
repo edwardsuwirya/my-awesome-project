@@ -3,6 +3,7 @@ import './login.css';
 import {validatePassword, validateUserName} from "../../api/user";
 import {authUser, changeUserSession} from "../../actions/user/index";
 import {connect} from "react-redux";
+import Modal from "../modal/Modal";
 
 class Login extends React.Component {
     constructor(props) {
@@ -16,7 +17,8 @@ class Login extends React.Component {
             hideEmail: '',
             hidePassword: 'hideInput',
             notificationMessage: '',
-            userId: ''
+            userId: '',
+            loading: false
         };
         this.emailRef = React.createRef();
         this.passwordRef = React.createRef();
@@ -33,6 +35,7 @@ class Login extends React.Component {
             this.setState({invalidPassword: 'is-invalid'});
         }
         if (this.state.userId && this.state.password) {
+            await this.setState({loading: true});
             try {
                 const response = await validatePassword(this.state.userId, this.state.password);
                 const data = await response.json();
@@ -49,6 +52,7 @@ class Login extends React.Component {
             } catch (err) {
                 this.setState({alert: '', notificationMessage: 'Invalid Password'})
             }
+            await this.setState({loading: false});
         }
     };
 
@@ -65,6 +69,7 @@ class Login extends React.Component {
             if (!this.state.email) {
                 this.setState({invalidEmail: 'is-invalid'});
             } else {
+                await this.setState({loading: true});
                 try {
                     const response = await validateUserName(this.state.email);
                     const data = await response.json();
@@ -81,10 +86,11 @@ class Login extends React.Component {
                     } else {
                         this.setState({alert: '', notificationMessage: 'We do not know you'});
                     }
+
                 } catch (err) {
                     this.setState({alert: '', notificationMessage: 'We do not know you'});
                 }
-
+                await this.setState({loading: false});
             }
 
         } else if (event.key === 'Enter' && from === 'password') {
@@ -96,15 +102,21 @@ class Login extends React.Component {
 
     render() {
         const loginLabel = {emailAddressText: 'Email Address', passwordText: 'Password', buttonText: 'Login'};
-        const {email, password, invalidEmail, invalidPassword, alert, hideEmail, hidePassword, notificationMessage} = this.state;
+        const {email, password, invalidEmail, invalidPassword, alert, hideEmail, hidePassword, notificationMessage, loading} = this.state;
         return (
             <div className='login main'>
+                <Modal visible={loading}>
+                    <div class="spinner-border" role="status">
+                    </div>
+                    <div><strong>Loading...</strong></div>
+                </Modal>
                 <div className="d-flex flex-column login container">
                     <div className="d-flex align-items-center login containerCenter">
                         <div className="d-flex justify-content-end login containerEnd">
                             <div className="card w-50 login backgroundColorCard">
                                 <div className="card-body">
-                                    <h2 className="login labelInput"><i class="fas fa-child"></i>  My Awesome Project</h2>
+                                    <h2 className="login labelInput"><i class="fas fa-child"></i> My Awesome Project
+                                    </h2>
                                     <br/>
                                     <div className={`alert alert-danger ${alert}`} role="alert">
                                         {notificationMessage}
@@ -146,7 +158,8 @@ class Login extends React.Component {
                                         </div>
                                         <button type=" submit"
                                                 className={`btn btn-primary login inputButton ${hidePassword} awesome-button-sm`}
-                                                onClick={this.doLogin}><i class="fas fa-sign-in-alt"></i> {loginLabel.buttonText}</button>
+                                                onClick={this.doLogin}><i
+                                            class="fas fa-sign-in-alt"></i> {loginLabel.buttonText}</button>
                                     </div>
                                 </div>
                             </div>
