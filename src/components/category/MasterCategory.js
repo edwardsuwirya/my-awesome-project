@@ -3,8 +3,12 @@ import MainContent from "../mainContent/MainContent";
 import {connect} from "react-redux";
 import {getListCategoryService} from "../../api/category";
 import {setListCategoryAction, updateCategoryAction} from "../../actions/category";
+import Alert from "../alert/alert";
+import Modal from "../modal/Modal";
 
 class MasterCategory extends React.Component {
+    state = {alert: false, notificationMessage: '', loading: false};
+
     componentDidMount() {
         this.doGetListCategory();
     }
@@ -18,9 +22,19 @@ class MasterCategory extends React.Component {
 
 
     doGetListCategory = async () => {
-        const response = await getListCategoryService();
-        const data = await response.json();
-        this.props.setListCategoryAction(data);
+        await this.setState({loading: true});
+        try {
+            const response = await getListCategoryService();
+            const data = await response.json();
+            this.props.setListCategoryAction(data);
+        } catch (err) {
+            this.props.setListProductAction([]);
+            this.setState({alert: true, notificationMessage: 'Session timeout'});
+            setTimeout(() => {
+                this.props.history.replace({pathname: '/'});
+            }, 1500)
+        }
+        this.setState({loading: false});
     };
 
     doUpdateCategory = (category) => {
@@ -70,6 +84,12 @@ class MasterCategory extends React.Component {
             <MainContent {...this.props}>
                 <div className="card">
                     <div className="card-body">
+                        <Alert visible={this.state.alert} message={this.state.notificationMessage}/>
+                        <Modal visible={this.state.loading}>
+                            <div class="spinner-border" role="status">
+                            </div>
+                            <div><strong>Loading...</strong></div>
+                        </Modal>
                         <h5 className="card-title">
                             <div className='d-flex flex-row align-items-center'>
                                 <div className='flex-grow-1'><i class="fas fa-clipboard-list"></i> Master Category</div>
@@ -80,7 +100,9 @@ class MasterCategory extends React.Component {
                             </div>
                         </h5>
                         <div className="card-subtitle mb-2">
-                            <button className="btn btn-link" onClick={this.doAddCategory}><i className="fas fa-plus"></i> New Category</button>
+                            <button className="btn btn-link" onClick={this.doAddCategory}><i
+                                className="fas fa-plus"></i> New Category
+                            </button>
                         </div>
                         <div className="card-text">
                             <table className='table table-sm' style={{width: '100%'}}>

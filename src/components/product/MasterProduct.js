@@ -4,8 +4,12 @@ import {connect} from "react-redux";
 import {setListProductAction, updateProductAction} from "../../actions/product/index";
 import {getListProductService} from "../../api/product/index";
 import {selectCategoryAction} from "../../actions/category";
+import Alert from "../alert/alert";
+import Modal from "../modal/Modal";
 
 class MasterProduct extends React.Component {
+    state = {alert: false, notificationMessage: '', loading: false};
+
     componentDidMount() {
         this.doGetListProduct();
     }
@@ -18,9 +22,19 @@ class MasterProduct extends React.Component {
     };
 
     doGetListProduct = async () => {
-        const response = await getListProductService();
-        const data = await response.json();
-        this.props.setListProductAction(data);
+        await this.setState({loading: true});
+        try {
+            const response = await getListProductService();
+            const data = await response.json();
+            this.props.setListProductAction(data);
+        } catch (err) {
+            this.props.setListProductAction([]);
+            this.setState({alert: true, notificationMessage: 'Session timeout'});
+            setTimeout(() => {
+                this.props.history.replace({pathname: '/'});
+            }, 1500)
+        }
+        this.setState({loading: false});
     };
 
     doUpdateProduct = (product) => {
@@ -74,9 +88,16 @@ class MasterProduct extends React.Component {
             <MainContent {...this.props}>
                 <div className="card">
                     <div className="card-body">
+                        <Alert visible={this.state.alert} message={this.state.notificationMessage}/>
+                        <Modal visible={this.state.loading}>
+                            <div class="spinner-border" role="status">
+                            </div>
+                            <div><strong>Loading...</strong></div>
+                        </Modal>
                         <div className="card-title">
                             <div className='d-flex flex-row align-items-center'>
-                                <div className='flex-grow-1'><h5><i class="fas fa-dolly-flatbed"></i>  Master Product</h5></div>
+                                <div className='flex-grow-1'><h5><i class="fas fa-dolly-flatbed"></i> Master Product
+                                </h5></div>
                                 <div>
                                     <button className="btn btn-link" onClick={this.doTutup}><i
                                         className="fas fa-2x fa-times-circle"></i></button>
@@ -117,6 +138,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     setListProductAction: setListProductAction,
     updateProductAction: updateProductAction,
-    selectCategoryAction:selectCategoryAction
+    selectCategoryAction: selectCategoryAction
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MasterProduct);
