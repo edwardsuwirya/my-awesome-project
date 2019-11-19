@@ -50,7 +50,7 @@ class MasterProduct extends React.Component {
     };
 
     doAddProduct = () => {
-        this.props.selectCategoryAction('')
+        this.props.selectCategoryAction('');
         this.props.history.push({pathname: '/protected/main/masterProductUpdate', state: {forAct: 'Create'}})
     };
 

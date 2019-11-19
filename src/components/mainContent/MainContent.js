@@ -11,7 +11,6 @@ class MainContent extends React.Component {
     };
 
 
-
     render() {
         return (
             <div>
@@ -30,7 +29,7 @@ class MainContent extends React.Component {
                         <div className='col-md-2 bg-light sidebar'>
                             <Sidebar/>
                         </div>
-                        <div className='col-md-9'>
+                        <div className='col-md-9' style={{marginTop: '5%', marginLeft: '20%'}}>
                             {this.props.children}
                         </div>
                     </div>
