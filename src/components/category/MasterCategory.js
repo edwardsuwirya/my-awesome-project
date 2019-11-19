@@ -22,13 +22,13 @@ class MasterCategory extends React.Component {
 
 
     doGetListCategory = async () => {
-        await this.setState({loading: true});
+        this.setState({loading: true});
         try {
             const response = await getListCategoryService();
             const data = await response.json();
             this.props.setListCategoryAction(data);
         } catch (err) {
-            this.props.setListProductAction([]);
+            // this.props.setListProductAction([]);
             this.setState({alert: true, notificationMessage: 'Session timeout'});
             setTimeout(() => {
                 this.props.history.replace({pathname: '/'});

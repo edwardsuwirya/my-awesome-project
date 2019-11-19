@@ -28,6 +28,8 @@ class Login extends React.Component {
         this.emailRef.current.focus();
     }
 
+
+
     doLogin = async (event) => {
         event.preventDefault();
 
@@ -35,7 +37,7 @@ class Login extends React.Component {
             this.setState({invalidPassword: 'is-invalid'});
         }
         if (this.state.userId && this.state.password) {
-            await this.setState({loading: true});
+            this.setState({loading: true});
             try {
                 const response = await validatePassword(this.state.userId, this.state.password);
                 const data = await response.json();
@@ -52,7 +54,6 @@ class Login extends React.Component {
             } catch (err) {
                 this.setState({alert: '', notificationMessage: 'Invalid Password'})
             }
-            await this.setState({loading: false});
         }
     };
 
@@ -69,7 +70,7 @@ class Login extends React.Component {
             if (!this.state.email) {
                 this.setState({invalidEmail: 'is-invalid'});
             } else {
-                await this.setState({loading: true});
+                this.setState({loading: true});
                 try {
                     const response = await validateUserName(this.state.email);
                     const data = await response.json();
@@ -90,7 +91,7 @@ class Login extends React.Component {
                 } catch (err) {
                     this.setState({alert: '', notificationMessage: 'We do not know you'});
                 }
-                await this.setState({loading: false});
+                this.setState({loading: false});
             }
 
         } else if (event.key === 'Enter' && from === 'password') {
@@ -106,7 +107,7 @@ class Login extends React.Component {
         return (
             <div className='login main'>
                 <Modal visible={loading}>
-                    <div class="spinner-border" role="status">
+                    <div className="spinner-border" role="status">
                     </div>
                     <div><strong>Loading...</strong></div>
                 </Modal>
@@ -115,7 +116,7 @@ class Login extends React.Component {
                         <div className="d-flex justify-content-end login containerEnd">
                             <div className="card w-50 login backgroundColorCard">
                                 <div className="card-body">
-                                    <h2 className="login labelInput"><i class="fas fa-child"></i> My Awesome Project
+                                    <h2 className="login labelInput"><i className="fas fa-child"></i> My Awesome Project
                                     </h2>
                                     <br/>
                                     <div className={`alert alert-danger ${alert}`} role="alert">
@@ -159,7 +160,7 @@ class Login extends React.Component {
                                         <button type=" submit"
                                                 className={`btn btn-primary login inputButton ${hidePassword} awesome-button-sm`}
                                                 onClick={this.doLogin}><i
-                                            class="fas fa-sign-in-alt"></i> {loginLabel.buttonText}</button>
+                                            className="fas fa-sign-in-alt"></i> {loginLabel.buttonText}</button>
                                     </div>
                                 </div>
                             </div>

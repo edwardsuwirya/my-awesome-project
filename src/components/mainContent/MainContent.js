@@ -23,6 +23,11 @@ class MainContent extends React.Component {
                     pathname: '/protected/main/masterProduct'
                 });
                 break;
+            case 'upload':
+                this.props.history.push({
+                    pathname: '/protected/main/upload'
+                });
+                break;
             default:
                 break;
         }
@@ -32,7 +37,7 @@ class MainContent extends React.Component {
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <div className="navbar-brand mx-auto"><i class="fas fa-child"></i> My Awesome Project</div>
+                    <div className="navbar-brand mx-auto"><i className="fas fa-child"></i> My Awesome Project</div>
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
                             aria-label="Toggle navigation">
@@ -42,17 +47,20 @@ class MainContent extends React.Component {
                         <div className="navbar-nav mr-auto">
                             <div className="nav-item nav-link" onClick={(event) => {
                                 this.doShowModule(event, 'category')
-                            }}><i class="fas fa-clipboard-list"></i> Category</div>
+                            }}><i className="fas fa-clipboard-list"></i> Category</div>
                             <div className="nav-item nav-link" onClick={(event) => {
                                 this.doShowModule(event, 'product')
-                            }}><i class="fas fa-dolly-flatbed"></i> Product</div>
+                            }}><i className="fas fa-dolly-flatbed"></i> Product</div>
+                            <div className="nav-item nav-link" onClick={(event) => {
+                                this.doShowModule(event, 'upload')
+                            }}><i className="fas fa-cloud-upload-alt"></i> Upload</div>
                         </div>
                     </div>
                     <div className="navbar-collapse collapse w-100">
                         <div className="navbar-nav ml-auto">
                             <label
                                 className="nav-item nav-link">{'Welcome ' + this.props.userActive.namaLengkap}</label>
-                            <div className="nav-item nav-link" onClick={this.doLogout}><i class="fas fa-sign-out-alt"></i> Logout</div>
+                            <div className="nav-item nav-link" onClick={this.doLogout}><i className="fas fa-sign-out-alt"></i> Logout</div>
                         </div>
                     </div>
 
