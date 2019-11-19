@@ -2,71 +2,39 @@ import React from 'react';
 import './mainContent.css';
 import {connect} from "react-redux";
 import {logout} from "../../actions/user/index";
+import Sidebar from "../sidebar/Sidebar";
 
 class MainContent extends React.Component {
     doLogout = (event) => {
         event.preventDefault();
         this.props.logout();
-        // console.log(this.props)
     };
 
-    doShowModule = (event, module) => {
-        event.preventDefault();
-        switch (module) {
-            case 'category':
-                this.props.history.push({
-                    pathname: '/protected/main/masterCategory'
-                });
-                break;
-            case 'product':
-                this.props.history.push({
-                    pathname: '/protected/main/masterProduct'
-                });
-                break;
-            case 'upload':
-                this.props.history.push({
-                    pathname: '/protected/main/upload'
-                });
-                break;
-            default:
-                break;
-        }
-    };
+
 
     render() {
         return (
             <div>
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <div className="navbar-brand mx-auto"><i className="fas fa-child"></i> My Awesome Project</div>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse w-100" id="navbarNavAltMarkup">
-                        <div className="navbar-nav mr-auto">
-                            <div className="nav-item nav-link" onClick={(event) => {
-                                this.doShowModule(event, 'category')
-                            }}><i className="fas fa-clipboard-list"></i> Category</div>
-                            <div className="nav-item nav-link" onClick={(event) => {
-                                this.doShowModule(event, 'product')
-                            }}><i className="fas fa-dolly-flatbed"></i> Product</div>
-                            <div className="nav-item nav-link" onClick={(event) => {
-                                this.doShowModule(event, 'upload')
-                            }}><i className="fas fa-cloud-upload-alt"></i> Upload</div>
+                <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+                    <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#">My Awesome Project</a>
+                    <ul className="navbar-nav px-3">
+                        <li className="d-flex flex-row nav-item text-nowrap">
+                            <label className='nav-link mr-1'>{'Welcome ' + this.props.userActive.namaLengkap}</label>
+                            <a className="nav-link" href="#" onClick={this.doLogout}><i
+                                className="fas fa-sign-out-alt"></i> Logout</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div className='container-fluid'>
+                    <div className='row'>
+                        <div className='col-md-2 bg-light sidebar'>
+                            <Sidebar/>
                         </div>
-                    </div>
-                    <div className="navbar-collapse collapse w-100">
-                        <div className="navbar-nav ml-auto">
-                            <label
-                                className="nav-item nav-link">{'Welcome ' + this.props.userActive.namaLengkap}</label>
-                            <div className="nav-item nav-link" onClick={this.doLogout}><i className="fas fa-sign-out-alt"></i> Logout</div>
+                        <div className='col-md-9'>
+                            {this.props.children}
                         </div>
                     </div>
 
-                </nav>
-                <div className='container mt-3'>
-                    {this.props.children}
                 </div>
 
             </div>

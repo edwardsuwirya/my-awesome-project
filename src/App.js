@@ -22,9 +22,10 @@ class App extends React.Component {
                     <PrivateRoute path='/protected/main/masterProduct' Component={MasterProduct}/>
                     <PrivateRoute path='/protected/main/upload' Component={FileTransaction}/>
                     <PrivateRoute path='/protected/main' Component={MainContent}/>
-                    <Route path="/"
-                           render={(props) => <Login {...props}/>}
-                    />
+                    {/*<Route path="/"*/}
+                    {/*render={(props) => <Login {...props}/>}*/}
+                    {/*/>*/}
+                    <Route path='/' component={MainContent}></Route>
                     <Route render={() => <div></div>}></Route>
                 </Switch>
             </BrowserRouter>
