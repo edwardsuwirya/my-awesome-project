@@ -9,6 +9,7 @@ import MasterCategory from "./components/category/MasterCategory";
 import MasterProductUpdate from "./components/product/MasterProductUpdate";
 import MasterCategoryUpdate from "./components/category/MasterCategoryUpdate";
 import FileTransaction from "./components/fileTransaction/FileTransaction";
+import DockViewer from "./components/dockViewer/dockViewer";
 
 
 class App extends React.Component {
@@ -21,6 +22,7 @@ class App extends React.Component {
                     <PrivateRoute path='/protected/main/masterCategory' Component={MasterCategory}/>
                     <PrivateRoute path='/protected/main/masterProduct' Component={MasterProduct}/>
                     <PrivateRoute path='/protected/main/upload' Component={FileTransaction}/>
+                    <PrivateRoute path='/protected/main/dockViewer' Component={DockViewer}/>
                     <PrivateRoute path='/protected/main' Component={MainContent}/>
                     <Route path="/"
                            render={(props) => <Login {...props}/>}

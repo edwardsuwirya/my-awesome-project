@@ -20,8 +20,8 @@ class Sidebar extends React.Component {
                 header: 'Transaction',
                 children: [{
                     name: 'Ship',
-                    path: '/protected/main/ship',
-                    icon: 'fa-cloud-upload-alt'
+                    path: '/protected/main/dockViewer',
+                    icon: 'fa-ship'
                 }, {
                     name: 'Upload',
                     path: '/protected/main/upload',

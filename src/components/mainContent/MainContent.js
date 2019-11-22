@@ -10,7 +10,6 @@ class MainContent extends React.Component {
         this.props.logout();
     };
 
-
     render() {
         return (
             <div>
@@ -32,10 +31,10 @@ class MainContent extends React.Component {
                         <div className='col-md-9' style={{marginTop: '5%', marginLeft: '20%'}}>
                             {this.props.children}
                         </div>
+
                     </div>
 
                 </div>
-
             </div>
         )
     }

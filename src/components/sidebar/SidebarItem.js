@@ -50,7 +50,7 @@ class SidebarItem extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
+    // console.log(state)
     return {menuActive: state.menuActive, menuHeaderActive: state.menuHeaderActive};
 };
 
